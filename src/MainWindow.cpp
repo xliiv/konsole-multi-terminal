@@ -44,9 +44,8 @@
 #include <KApplication>
 #include <KShortcut>
 #include <KIconLoader>
-//=======
+// TODO:: rm debug
 #include <KDebug>
-//>>>>>>> vincepii/master
 
 // Konsole
 #include "BookmarkHandler.h"

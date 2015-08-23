@@ -152,7 +152,6 @@ void ViewManager::setupActions()
     multiViewOnlyActions << nextContainerAction;
 
     if (collection) {
-//<<<<<<< HEAD
         QAction* splitLeftRightAction = new QAction(QIcon::fromTheme(QStringLiteral("view-split-left-right")),
                 i18nc("@action:inmenu", "Split View Left/Right"),
                 this);
@@ -199,8 +198,6 @@ void ViewManager::setupActions()
         connect(shrinkActiveAction , &QAction::triggered , this , &Konsole::ViewManager::shrinkActiveContainer);
 
         multiViewOnlyActions << shrinkActiveAction;
-//=======
-//>>>>>>> vincepii/master
 
 #if defined(ENABLE_DETACHING)
         QAction* detachViewAction = collection->addAction("detach-view");
@@ -230,9 +227,9 @@ void ViewManager::setupActions()
             QAction* switchToTabAction = new QAction(i18nc("@action Shortcut entry", "Switch to Tab %1", i + 1), this);
             switchToTabMapper->setMapping(switchToTabAction, i);
 //<<<<<<< HEAD
-//            connect(switchToTabAction, &QAction::triggered, switchToTabMapper, static_cast<void(QSignalMapper::*)()>(&QSignalMapper::map));
+            connect(switchToTabAction, &QAction::triggered, switchToTabMapper, static_cast<void(QSignalMapper::*)()>(&QSignalMapper::map));
 //=======
-            connect(switchToTabAction, SIGNAL(triggered()), switchToTabMapper, SLOT(map()));
+//            connect(switchToTabAction, SIGNAL(triggered()), switchToTabMapper, SLOT(map()));
 //>>>>>>> vincepii/master
             collection->addAction(QString("switch-to-tab-%1").arg(i), switchToTabAction);
         }

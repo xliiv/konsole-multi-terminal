@@ -1,10 +1,6 @@
 <!DOCTYPE kpartgui>
 
-//<<<<<<< HEAD
 <kpartgui name="konsolepart" version="11" translationDomain="konsole">
-//=======
-//<kpartgui name="konsolepart" version="11">
-//>>>>>>> vincepii/master
     <Menu name="session-popup-menu">
         <Action name="edit_copy"/>
         <Action name="edit_paste"/>

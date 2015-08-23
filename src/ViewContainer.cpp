@@ -581,13 +581,10 @@ void TabbedViewContainer::moveViewWidget(int fromIndex , int toIndex)
     // FIXME (KF5?)- This will lose properties of the tab other than
     // their text and icon when moving them
 
-//<<<<<<< HEAD
-//=======
     _tabBar->removeTab(fromIndex);
     _tabBar->insertTab(toIndex, icon, text);
 
     // TODO: something needed here?
-//>>>>>>> vincepii/master
     QWidget* widget = _stackWidget->widget(fromIndex);
     // this also removes the tab from the tab bar
     _stackWidget->removeWidget(widget);
