@@ -44,6 +44,9 @@
 #include <KApplication>
 #include <KShortcut>
 #include <KIconLoader>
+//=======
+#include <KDebug>
+//>>>>>>> vincepii/master
 
 // Konsole
 #include "BookmarkHandler.h"
@@ -208,8 +211,11 @@ void MainWindow::disconnectController(SessionController* controller)
     // with the controller internally, which may not be valid after the controller
     // itself is no longer valid (after the associated session and or view have
     // been destroyed)
-    if (controller->isValid())
+    kDebug() << "VINCENZO: trying to remove controller";
+    if (controller->isValid()) {
+        kDebug() << "VINCENZO: removing controller";
         guiFactory()->removeClient(controller);
+    }
 
     controller->setSearchBar(0);
 }

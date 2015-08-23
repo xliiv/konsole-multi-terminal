@@ -27,6 +27,7 @@
 #include <QtCore/QPointer>
 #include <QtCore/QHash>
 #include <QtCore/QList>
+#include <QWidget>
 
 // Konsole
 #include "Profile.h"
@@ -61,7 +62,7 @@ class TabbedViewContainer;
  * to actually add or remove view widgets from the container widget, as well
  * as updating any navigation aids.
  */
-class ViewContainer : public QObject
+class ViewContainer : public QWidget
 {
     Q_OBJECT
 
@@ -87,7 +88,7 @@ public:
      * @param position The initial position of the navigation widget
      * @param parent The parent object of the container
      */
-    ViewContainer(NavigationPosition position , QObject* parent);
+    ViewContainer(NavigationPosition position , QWidget* parent);
 
     /**
      * Called when the ViewContainer is destroyed.  When reimplementing this in
@@ -369,7 +370,7 @@ public:
      * Constructs a new tabbed view container.  Supported positions
      * are NavigationPositionTop and NavigationPositionBottom.
      */
-    TabbedViewContainer(NavigationPosition position, ViewManager* connectedViewManager, QObject* parent);
+    TabbedViewContainer(NavigationPosition position, ViewManager* connectedViewManager, QWidget* parent);
     virtual ~TabbedViewContainer();
 
     virtual QWidget* containerWidget() const;
@@ -437,7 +438,7 @@ private:
 class StackedViewContainer : public ViewContainer
 {
 public:
-    explicit StackedViewContainer(QObject* parent);
+    explicit StackedViewContainer(QWidget* parent);
     virtual ~StackedViewContainer();
 
     virtual QWidget* containerWidget() const;

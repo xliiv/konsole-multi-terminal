@@ -28,6 +28,7 @@
 // Konsole
 #include "Profile.h"
 #include "ViewContainer.h"
+#include "MultiTerminalDisplayManager.h"
 
 class QSignalMapper;
 class KActionCollection;
@@ -35,6 +36,7 @@ class KConfigGroup;
 
 namespace Konsole
 {
+
 class ColorScheme;
 class IncrementalSearchBar;
 class Session;
@@ -82,6 +84,11 @@ public:
      * Constructs a new container to hold the views if no container has yet been created.
      */
     void createView(Session* session);
+
+    /**
+     * Creates a multi-terminal view.
+     */
+    void createMultiTerminalView(Qt::Orientation orientation);
 
     /**
      * Applies the view-specific settings associated with specified @p profile
@@ -161,6 +168,13 @@ public:
     IncrementalSearchBar* searchBar() const;
 
     /**
+     * Creates a new terminal display and updates the internal status of the
+     * ViewManager.
+     * Wrapper around the createTerminalDisplay for external clients.
+     */
+    TerminalDisplay* createAndSetupTerminalDisplay(Session* session);
+
+    /**
      * Session management
      */
     void saveSessions(KConfigGroup& group);
@@ -203,7 +217,7 @@ signals:
      */
     void viewPropertiesChanged(const QList<ViewProperties*>& propertiesList);
 
-    /**
+   /**
      * Emitted when the number of views containers changes.  This is used to disable or
      * enable menu items which can only be used when there are one or multiple containers
      * visible.
@@ -212,6 +226,13 @@ signals:
      * just a single view.
      */
     void splitViewToggle(bool multipleViews);
+
+    /**
+     * Emitted when there is more than one multi-terminal open.
+     * @param multiTerminals True if there is more than one multi-terminal open for the current
+     * view
+     */
+    void closeMultiTerminalToggle(bool multiTerminals);
 
     /**
      * Emitted when menu bar visibility changes because a profile that requires so is
@@ -282,6 +303,18 @@ private slots:
     void expandActiveContainer();
     void shrinkActiveContainer();
 
+    void multiTerminalHorizontal();
+    void multiTerminalVertical();
+    void multiTerminalClose();
+
+    void moveToLeftMtd();
+    void moveToTopMtd();
+    void moveToRightMtd();
+    void moveToBottomMtd();
+
+    // Moves the focus from the current widget to the closest one in the given direction
+    void moveMtdFocus(MultiTerminalDisplayManager::Directions direction);
+
     // called when the "Detach View" menu item is selected
     void detachActiveView();
     void updateDetachViewState();
@@ -341,6 +374,8 @@ private slots:
 
     void closeTabFromContainer(ViewContainer* container, QWidget* view);
 
+    QList<QWidget*> getTerminalsFromContainer(ViewContainer *container) const;
+
 private:
     void createView(Session* session, ViewContainer* container, int index);
     static const ColorScheme* colorSchemeForProfile(const Profile::Ptr profile);
@@ -372,6 +407,7 @@ private:
     QPointer<SessionController>     _pluggedController;
 
     QHash<TerminalDisplay*, Session*> _sessionMap;
+    //QHash<ViewContainer*, MultiTerminalDisplay*> _multiTerminalsMap;
 
     KActionCollection*                  _actionCollection;
     QSignalMapper*                      _containerSignalMapper;
@@ -386,6 +422,8 @@ private:
 
     int _managerId;
     static int lastManagerId;
+
+    MultiTerminalDisplayManager* _mtdManager;
 };
 }
 

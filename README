@@ -1,3 +1,31 @@
+UPDATE on the project status.
+=============================
+
+This project is not maintained anymore.
+
+The reason is that at the moment I am not using KDE and so have little 
+interest in it.
+
+The next work item would be to apply these changes to the latest version 
+of Konsole and try to make them effective upstream.
+
+Multi Terminal implementation
+=============================
+
+This repository is the "vanilla" konsole application to which a new feature
+is being added.
+
+The new feature is a different split behavior in which a terminal can be
+split into an indefinite amount of other terminals (horizontally and
+vertically). Note that this is different than the current "Split View"
+implementation.
+
+This repository will be kept aligned with the master repository at KDE,
+plus it will contain the changes for the implementation of the
+multi-terminal. It serves as a "personal" branch on which to save
+unfinished work.
+
+
 Konsole - KDE's Terminal Emulator
 ==================================
 

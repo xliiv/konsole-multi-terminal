@@ -60,7 +60,6 @@ Part::Part(QWidget* parentWidget , QObject* parent, const QVariantList&)
 
     // create view widget
     _viewManager = new ViewManager(this, actionCollection());
-    _viewManager->setNavigationMethod(ViewManager::NoNavigation);
 
     connect(_viewManager, &Konsole::ViewManager::activeViewChanged, this , &Konsole::Part::activeViewChanged);
     connect(_viewManager, &Konsole::ViewManager::empty, this, &Konsole::Part::terminalExited);

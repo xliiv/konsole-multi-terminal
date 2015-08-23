@@ -50,8 +50,8 @@
 
 using namespace Konsole;
 
-ViewContainer::ViewContainer(NavigationPosition position , QObject* parent)
-    : QObject(parent)
+ViewContainer::ViewContainer(NavigationPosition position , QWidget* parent)
+    : QWidget(parent)
     , _navigationVisibility(AlwaysShowNavigation)
     , _navigationPosition(position)
     , _searchBar(0)
@@ -244,7 +244,7 @@ QList<QWidget*> ViewContainer::widgetsForItem(ViewProperties* item) const
     return _navigation.keys(item);
 }
 
-TabbedViewContainer::TabbedViewContainer(NavigationPosition position, ViewManager* connectedViewManager, QObject* parent)
+TabbedViewContainer::TabbedViewContainer(NavigationPosition position, ViewManager* connectedViewManager, QWidget* parent)
     : ViewContainer(position, parent)
     , _connectedViewManager(connectedViewManager)
     , _contextMenuTabIndex(0)
@@ -581,6 +581,13 @@ void TabbedViewContainer::moveViewWidget(int fromIndex , int toIndex)
     // FIXME (KF5?)- This will lose properties of the tab other than
     // their text and icon when moving them
 
+//<<<<<<< HEAD
+//=======
+    _tabBar->removeTab(fromIndex);
+    _tabBar->insertTab(toIndex, icon, text);
+
+    // TODO: something needed here?
+//>>>>>>> vincepii/master
     QWidget* widget = _stackWidget->widget(fromIndex);
     // this also removes the tab from the tab bar
     _stackWidget->removeWidget(widget);
@@ -708,7 +715,7 @@ ViewManager* TabbedViewContainer::connectedViewManager()
     return _connectedViewManager;
 }
 
-StackedViewContainer::StackedViewContainer(QObject* parent)
+StackedViewContainer::StackedViewContainer(QWidget* parent)
     : ViewContainer(NavigationPositionTop, parent)
 {
     _containerWidget = new QWidget;
