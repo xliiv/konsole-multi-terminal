@@ -245,7 +245,7 @@ void ViewManager::setupActions()
 //=======
     // Menu item for the vertical split of the multi terminal
     QAction * multiTerminalVerAction;
-    QAction * multiTerminalVerAction = new QAction(KIcon("view-split-left-right"), i18nc("@action:inmenu", "Split Pane &Vertically"), this);
+    multiTerminalVerAction = new QAction(QIcon::fromTheme("view-split-left-right"), i18nc("@action:inmenu", "Split Pane &Vertically"), this);
     multiTerminalVerAction->setEnabled(true);
     multiTerminalVerAction->setShortcut(QKeySequence(Qt::META + Qt::Key_D));
     collection->addAction("multi-terminal-ver", multiTerminalVerAction);
@@ -254,7 +254,7 @@ void ViewManager::setupActions()
 
 
     // Menu item for the horizontal split of the multi terminal
-    QAction * multiTerminalHorAction = new QAction(KIcon("view-split-top-bottom"), i18nc("@action:inmenu", "Split Pane &Horizontally"), this);
+    QAction * multiTerminalHorAction = new QAction(QIcon::fromTheme("view-split-top-bottom"), i18nc("@action:inmenu", "Split Pane &Horizontally"), this);
     multiTerminalHorAction->setEnabled(true);
     multiTerminalHorAction->setShortcut(QKeySequence(Qt::META + Qt::CTRL + Qt::Key_D));
     collection->addAction("multi-terminal-hor", multiTerminalHorAction);
@@ -263,7 +263,7 @@ void ViewManager::setupActions()
 
 
     // Menu item for closing a multi terminal
-    QAction * closeMultiTerminalAction = new QAction(KIcon("view-close"), i18nc("@action:inmenu", "&Close"), this);
+    QAction * closeMultiTerminalAction = new QAction(QIcon::fromTheme("view-close"), i18nc("@action:inmenu", "&Close"), this);
     closeMultiTerminalAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_W));
     collection->addAction("multi-terminal-close", closeMultiTerminalAction);
     _viewSplitter->addAction(closeMultiTerminalAction);
@@ -274,28 +274,28 @@ void ViewManager::setupActions()
     goToLeftMtdAction = collection->addAction("to-left-mtd", this, SLOT(moveToLeftMtd()));
     goToLeftMtdAction->setText(i18n("&Move to closest multi-terminal on the left"));
     // TODO: icon?
-    goToLeftMtdAction->setIcon(KIcon("edit-rename"));
+    goToLeftMtdAction->setIcon(QIcon::fromTheme("edit-rename"));
     goToLeftMtdAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Left));
     // Shortcut to move to the MTD above
     QAction * goToTopMtdAction = 0;
     goToTopMtdAction = collection->addAction("to-top-mtd", this, SLOT(moveToTopMtd()));
     goToTopMtdAction->setText(i18n("&Move to closest multi-terminal above"));
     // TODO: icon?
-    goToTopMtdAction->setIcon(KIcon("edit-rename"));
+    goToTopMtdAction->setIcon(QIcon::fromTheme("edit-rename"));
     goToTopMtdAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Up));
     // Shortcut to move to the MTD to the right
     QAction * goToRightMtdAction = 0;
     goToRightMtdAction = collection->addAction("to-right-mtd", this, SLOT(moveToRightMtd()));
     goToRightMtdAction->setText(i18n("&Move to closest multi-terminal on the right"));
     // TODO: icon?
-    goToRightMtdAction->setIcon(KIcon("edit-rename"));
+    goToRightMtdAction->setIcon(QIcon::fromTheme("edit-rename"));
     goToRightMtdAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Right));
     // Shortcut to move to the MTD below
     QAction * goToBottomMtdAction = 0;
     goToBottomMtdAction = collection->addAction("to-bottom-mtd", this, SLOT(moveToBottomMtd()));
     goToBottomMtdAction->setText(i18n("&Move to closest multi-terminal below"));
     // TODO: icon?
-    goToBottomMtdAction->setIcon(KIcon("edit-rename"));
+    goToBottomMtdAction->setIcon(QIcon::fromTheme("edit-rename"));
     goToBottomMtdAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Down));
 //>>>>>>> vincepii/master
 
