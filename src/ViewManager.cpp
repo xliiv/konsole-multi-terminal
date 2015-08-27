@@ -226,11 +226,7 @@ void ViewManager::setupActions()
         for (int i = 0; i < SWITCH_TO_TAB_COUNT; i++) {
             QAction* switchToTabAction = new QAction(i18nc("@action Shortcut entry", "Switch to Tab %1", i + 1), this);
             switchToTabMapper->setMapping(switchToTabAction, i);
-//<<<<<<< HEAD
             connect(switchToTabAction, &QAction::triggered, switchToTabMapper, static_cast<void(QSignalMapper::*)()>(&QSignalMapper::map));
-//=======
-//            connect(switchToTabAction, SIGNAL(triggered()), switchToTabMapper, SLOT(map()));
-//>>>>>>> vincepii/master
             collection->addAction(QString("switch-to-tab-%1").arg(i), switchToTabAction);
         }
     }
