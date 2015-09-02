@@ -268,7 +268,6 @@ void ViewManager::setupActions()
     collection->setDefaultShortcut(multiTerminalVerAction, Qt::META + Qt::Key_D);
     connect(multiTerminalVerAction, SIGNAL(triggered()), this, SLOT(multiTerminalVertical()));
 
-
     // Menu item for the horizontal split of the multi terminal
     QAction * multiTerminalHorAction = new QAction(QIcon::fromTheme("view-split-top-bottom"), i18nc("@action:inmenu", "Split Pane &Horizontally"), this);
     multiTerminalHorAction->setEnabled(true);
@@ -277,13 +276,13 @@ void ViewManager::setupActions()
     collection->setDefaultShortcut(multiTerminalHorAction, Qt::META + Qt::CTRL + Qt::Key_D);
     connect(multiTerminalHorAction, SIGNAL(triggered()), this, SLOT(multiTerminalHorizontal()));
 
-
     // Menu item for closing a multi terminal
     QAction * closeMultiTerminalAction = new QAction(QIcon::fromTheme("view-close"), i18nc("@action:inmenu", "&Close"), this);
     collection->addAction("multi-terminal-close", closeMultiTerminalAction);
     _viewSplitter->addAction(closeMultiTerminalAction);
     collection->setDefaultShortcut(closeMultiTerminalAction, Qt::CTRL + Qt::Key_W);
     connect(closeMultiTerminalAction, SIGNAL(triggered()), this, SLOT(multiTerminalClose()));
+
 
     // Shortcut to move to the MTD to the left
     QAction * goToLeftMtdAction = 0;
@@ -313,8 +312,16 @@ void ViewManager::setupActions()
     // TODO: icon?
     goToBottomMtdAction->setIcon(QIcon::fromTheme("edit-rename"));
     collection->setDefaultShortcut(goToBottomMtdAction, Qt::ALT + Qt::Key_Down);
-//>>>>>>> vincepii/master
-
+    // Shortcut to cycle forward
+    QAction* cycleForwardMtdAction = new QAction(
+        i18nc("@action Shortcut entry", "Cycle to next multi terminal"), this
+    );
+    collection->addAction("cycle-forward-mtd", cycleForwardMtdAction);
+    collection->setDefaultShortcut(
+        cycleForwardMtdAction, Qt::CTRL + Qt::Key_QuoteLeft
+    );
+    connect(cycleForwardMtdAction, &QAction::triggered, this, &Konsole::ViewManager::cycleForwardMtd);
+    _viewSplitter->addAction(cycleForwardMtdAction);
 }
 void ViewManager::switchToView(int index)
 {
@@ -591,6 +598,54 @@ void ViewManager::moveToBottomMtd()
     moveMtdFocus(MultiTerminalDisplayManager::BOTTOM);
 }
 
+void ViewManager::cycleForwardMtd()
+{
+
+    qDebug() << "cycleForwardMtdAction";
+    /*
+    //TODO:: do it :P
+    //moveMtdFocus(MultiTerminalDisplayManager::BOTTOM);
+    _mtdManager = new MultiTerminalDisplayManager(this);
+
+    MultiTerminalDisplay* mtd = qobject_cast<MultiTerminalDisplay*>(view);
+    MultiTerminalDisplay* nextNode = originalRoot;
+    nextNode = sourceTree->traverseTreeAndYeldNodes(nextNode);
+
+    // get next terminal
+    // activate next terminal
+    qDebug() << "ViewManager::createMultiTerminalView";
+
+    QString currentWorkingDir = activeViewController()->currentDir();
+
+    Profile::Ptr defaultProfile = ProfileManager::instance()->defaultProfile();
+
+    Session* session = SessionManager::instance()->createSession(defaultProfile);
+
+    if (!currentWorkingDir.isEmpty() && defaultProfile->startInCurrentSessionDir())
+        session->setInitialWorkingDirectory(currentWorkingDir);
+
+    session->addEnvironmentEntry(QString("KONSOLE_DBUS_WINDOW=/Windows/%1").arg(managerId()));
+
+    connect(session, SIGNAL(finished()), this, SLOT(sessionFinished()), Qt::UniqueConnection);
+
+    TerminalDisplay* display = createTerminalDisplay(session);
+    if (session == NULL) {qDebug() << "session was null!"; return;}
+    const Profile::Ptr profile = SessionManager::instance()->sessionProfile(session);
+    applyProfileToView(display, profile);
+    _sessionMap[display] = session;
+    session->addView(display);
+    createController(session, display);
+
+    MultiTerminalDisplay* containerMtd = qobject_cast<MultiTerminalDisplay*>(
+        _viewSplitter->activeContainer()->activeView()
+    );
+    MultiTerminalDisplay* multiTerminalDisplay = _mtdManager->getFocusedMultiTerminalDisplay(containerMtd);
+    _mtdManager->addTerminalDisplay(display, session, multiTerminalDisplay, orientation);
+    session->setDarkBackground(colorSchemeForProfile(profile)->hasDarkBackground());
+    updateDetachViewState();
+    */
+}
+
 void ViewManager::moveMtdFocus(MultiTerminalDisplayManager::Directions direction)
 {
     qDebug() << "moveMtdFocus";
@@ -787,7 +842,9 @@ void ViewManager::createMultiTerminalView(Qt::Orientation orientation)
     session->addView(display);
     createController(session, display);
 
-    MultiTerminalDisplay* containerMtd = qobject_cast<MultiTerminalDisplay*>(_viewSplitter->activeContainer()->activeView());
+    MultiTerminalDisplay* containerMtd = qobject_cast<MultiTerminalDisplay*>(
+        _viewSplitter->activeContainer()->activeView()
+    );
     MultiTerminalDisplay* multiTerminalDisplay = _mtdManager->getFocusedMultiTerminalDisplay(containerMtd);
     _mtdManager->addTerminalDisplay(display, session, multiTerminalDisplay, orientation);
 

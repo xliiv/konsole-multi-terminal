@@ -311,6 +311,7 @@ private slots:
     void moveToTopMtd();
     void moveToRightMtd();
     void moveToBottomMtd();
+    void cycleForwardMtd();
 
     // Moves the focus from the current widget to the closest one in the given direction
     void moveMtdFocus(MultiTerminalDisplayManager::Directions direction);
