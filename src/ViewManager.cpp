@@ -35,7 +35,6 @@
 #include <KActionCollection>
 #include <KConfigGroup>
 #include <QLoggingCategory>
-//#include <KDebug>
 
 // Konsole
 #include <windowadaptor.h>
@@ -594,6 +593,7 @@ void ViewManager::moveToBottomMtd()
 
 void ViewManager::moveMtdFocus(MultiTerminalDisplayManager::Directions direction)
 {
+    qDebug() << "moveMtdFocus";
     MultiTerminalDisplay* containerMtd = qobject_cast<MultiTerminalDisplay*>(_viewSplitter->activeContainer()->activeView());
     MultiTerminalDisplay* focusMtd = _mtdManager->getFocusedMultiTerminalDisplay(containerMtd);
     TerminalDisplay* td = _mtdManager->getTerminalDisplayTo(focusMtd, direction, containerMtd);

@@ -28,6 +28,7 @@
 
 // Konsole
 #include "ViewContainer.h"
+#include <QDebug>
 
 using Konsole::ViewSplitter;
 using Konsole::ViewContainer;
@@ -197,18 +198,33 @@ void ViewSplitter::containerDestroyed(ViewContainer* container)
 
 void ViewSplitter::activateNextContainer()
 {
+
     ViewContainer* active = activeContainer();
 
+    qDebug() << "activateNextContainer";
+    if (_containers.count() == 1) {
+        // activation is pointless when only one container present
+        // switching focus on multiple-terminal handled else where
+        return;
+    }
     int index = _containers.indexOf(active);
 
-    if (index == -1)
+    if (index == -1) {
+        qDebug() << "-1";
         return;
+    }
 
-    if (index == _containers.count() - 1)
+    qDebug() << _containers.count();
+    if (index == _containers.count() - 1) {
+        qDebug() << "0";
         index = 0;
-    else
+    }
+    else {
+        qDebug() << "++";
         index++;
+    }
 
+    qDebug() << "got index" << index;
     setActiveContainer(_containers.at(index));
 }
 
