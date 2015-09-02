@@ -258,31 +258,57 @@ void ViewManager::setupActions()
     _viewSplitter->addAction(lastViewAction);
 
 
-    // multi terminal
+    // Multi Terminal
     // Menu item for the vertical split of the multi terminal
-    QAction * multiTerminalVerAction;
-    multiTerminalVerAction = new QAction(QIcon::fromTheme("view-split-left-right"), i18nc("@action:inmenu", "Split Pane &Vertically"), this);
-    multiTerminalVerAction->setEnabled(true);
+    QAction* multiTerminalVerAction = new QAction(
+        QIcon::fromTheme("view-split-left-right"),
+        i18nc("@action:inmenu", "Split Pane &Vertically"),
+        this
+    );
     collection->addAction("multi-terminal-ver", multiTerminalVerAction);
+    collection->setDefaultShortcut(
+        multiTerminalVerAction, Qt::ALT + Qt::Key_Backslash
+    );
+    connect(
+        multiTerminalVerAction,
+        &QAction::triggered, this,
+        &Konsole::ViewManager::multiTerminalVertical
+    );
     _viewSplitter->addAction(multiTerminalVerAction);
-    collection->setDefaultShortcut(multiTerminalVerAction, Qt::META + Qt::Key_D);
-    connect(multiTerminalVerAction, SIGNAL(triggered()), this, SLOT(multiTerminalVertical()));
-
     // Menu item for the horizontal split of the multi terminal
-    QAction * multiTerminalHorAction = new QAction(QIcon::fromTheme("view-split-top-bottom"), i18nc("@action:inmenu", "Split Pane &Horizontally"), this);
-    multiTerminalHorAction->setEnabled(true);
+    QAction* multiTerminalHorAction = new QAction(
+        QIcon::fromTheme("view-split-top-bottom"),
+        i18nc("@action:inmenu", "Split Pane &Horizontally"),
+        this
+    );
     collection->addAction("multi-terminal-hor", multiTerminalHorAction);
+    collection->setDefaultShortcut(
+        multiTerminalHorAction, Qt::ALT + Qt::Key_Minus
+    );
+    connect(
+        multiTerminalHorAction,
+        &QAction::triggered,
+        this,
+        &Konsole::ViewManager::multiTerminalHorizontal
+    );
     _viewSplitter->addAction(multiTerminalHorAction);
-    collection->setDefaultShortcut(multiTerminalHorAction, Qt::META + Qt::CTRL + Qt::Key_D);
-    connect(multiTerminalHorAction, SIGNAL(triggered()), this, SLOT(multiTerminalHorizontal()));
-
     // Menu item for closing a multi terminal
-    QAction * closeMultiTerminalAction = new QAction(QIcon::fromTheme("view-close"), i18nc("@action:inmenu", "&Close"), this);
+    QAction* closeMultiTerminalAction = new QAction(
+        QIcon::fromTheme("view-close"),
+        i18nc("@action:inmenu", "&Close"),
+        this
+    );
     collection->addAction("multi-terminal-close", closeMultiTerminalAction);
+    collection->setDefaultShortcut(
+        closeMultiTerminalAction, Qt::ALT + Qt::Key_W
+    );
+    connect(
+        closeMultiTerminalAction,
+        &QAction::triggered,
+        this,
+        &Konsole::ViewManager::multiTerminalClose
+    );
     _viewSplitter->addAction(closeMultiTerminalAction);
-    collection->setDefaultShortcut(closeMultiTerminalAction, Qt::CTRL + Qt::Key_W);
-    connect(closeMultiTerminalAction, SIGNAL(triggered()), this, SLOT(multiTerminalClose()));
-
 
     // Shortcut to move to the MTD to the left
     QAction * goToLeftMtdAction = 0;
@@ -508,6 +534,8 @@ void ViewManager::splitView(Qt::Orientation orientation)
         _mtdManager->cloneMtd(mtd, container);
     }
 
+    qDebug() << "views" << container->views().count();
+
     _viewSplitter->addContainer(container, orientation);
     emit splitViewToggle(_viewSplitter->containers().count() > 0);
 
@@ -602,6 +630,12 @@ void ViewManager::cycleForwardMtd()
 {
 
     qDebug() << "cycleForwardMtdAction";
+    //ViewContainer* container = _viewSplitter->activeContainer();
+    //_viewSplitter->activeContainer()->activeView()
+    //ViewContainer* active = activeContainer();
+    //get current view
+    //_mtdManager->cloneMtd(mtd, container);
+
     /*
     //TODO:: do it :P
     //moveMtdFocus(MultiTerminalDisplayManager::BOTTOM);
@@ -612,6 +646,11 @@ void ViewManager::cycleForwardMtd()
     nextNode = sourceTree->traverseTreeAndYeldNodes(nextNode);
 
     // get next terminal
+
+
+
+
+
     // activate next terminal
     qDebug() << "ViewManager::createMultiTerminalView";
 
