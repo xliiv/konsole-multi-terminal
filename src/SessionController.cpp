@@ -557,6 +557,18 @@ void SessionController::setupCommonActions()
     action->setText(i18n("Open File Manager"));
     action->setIcon(QIcon::fromTheme(QStringLiteral("system-file-manager")));
 
+
+
+
+    // xxx
+    action = collection->addAction("my-xxx", this, SLOT(xxx()));
+    action->setText(i18n("my-xxx"));
+    action->setIcon(QIcon::fromTheme(QStringLiteral("system-file-manager")));
+
+
+
+
+
     // Copy and Paste
     action = KStandardAction::copy(this, SLOT(copy()), collection);
     collection->setDefaultShortcut(action, Qt::CTRL + Qt::SHIFT + Qt::Key_C);
@@ -919,6 +931,18 @@ void SessionController::openBrowser()
         new KRun(QUrl::fromLocalFile(QDir::homePath()), QApplication::activeWindow(), true);
     }
 }
+
+
+
+
+
+void SessionController::xxx()
+{
+    qDebug() << "my-xxx";
+}
+
+
+
 
 void SessionController::copy()
 {
@@ -1478,6 +1502,7 @@ void SessionController::showDisplayContextMenu(const QPoint& position)
 {
     // needed to make sure the popup menu is available, even if a hosting
     // application did not merge our GUI.
+    qDebug() << "showDisplayContextMenu";
     if (!factory()) {
         if (!clientBuilder()) {
             setClientBuilder(new KXMLGUIBuilder(_view));

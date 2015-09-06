@@ -221,6 +221,7 @@ public slots:
 private slots:
     // menu item handlers
     void openBrowser();
+    void xxx();
     void copy();
     void paste();
     void selectAll();
