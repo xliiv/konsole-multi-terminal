@@ -143,6 +143,32 @@ void ViewManager::setupActions()
     multiViewOnlyActions << nextContainerAction;
 
     if (collection) {
+
+
+
+        // terminal split actions
+        QAction* splitTerminalLeftRightAction = new QAction(
+            QIcon::fromTheme(QStringLiteral("view-split-left-right")),
+            i18nc("@action:inmenu", "Split terminal Left/Right"),
+            this
+        );
+        collection->setDefaultShortcut(
+            // TODO:: check corectness of this
+            splitTerminalLeftRightAction, Qt::ALT + Qt::Key_Backslash
+        );
+        collection->addAction(
+            "split-terminal-left-right", splitTerminalLeftRightAction
+        );
+        connect(
+            splitTerminalLeftRightAction,
+            &QAction::triggered,
+            this,
+            &Konsole::ViewManager::splitTerminalLeftRight
+        );
+
+
+
+
         QAction* splitLeftRightAction = new QAction(QIcon::fromTheme(QStringLiteral("view-split-left-right")),
                 i18nc("@action:inmenu", "Split View Left/Right"),
                 this);
@@ -390,6 +416,10 @@ void ViewManager::viewActivated(QWidget* view)
     view->setFocus(Qt::OtherFocusReason);
 }
 
+void ViewManager::splitTerminalLeftRight()
+{
+    qDebug() << "splitTerminalLeftRight";
+}
 void ViewManager::splitLeftRight()
 {
     splitView(Qt::Horizontal);

@@ -282,6 +282,13 @@ private slots:
     void expandActiveContainer();
     void shrinkActiveContainer();
 
+
+
+    // called when the "Split Terminal Left/Right" menu item is selected
+    void splitTerminalLeftRight();
+
+
+
     // called when the "Detach View" menu item is selected
     void detachActiveView();
     void updateDetachViewState();

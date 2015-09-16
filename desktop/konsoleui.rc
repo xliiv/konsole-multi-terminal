@@ -25,6 +25,14 @@
                 <Action name="shrink-active-view"/>
             </Menu>
             <Separator/>
+
+
+            <Menu name="split-terminal"><text>Split Terminal</text>
+                <Action name="split-terminal-left-right" group="split-terminal"/>
+            </Menu>
+            <Separator/>
+
+
             <Action name="detach-view"/>
             <Separator/>
             <DefineGroup name="session-view-operations"/>
